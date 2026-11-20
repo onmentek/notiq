@@ -1,0 +1,279 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg-canvas: #f5f4f0;
+  --bg-surface: #ffffff;
+  --bg-surface-hover: #fbfaf8;
+  --bg-glass: rgba(255, 255, 255, 0.78);
+  --bg-glass-strong: rgba(255, 255, 255, 0.88);
+  --bg-backdrop: rgba(15, 23, 42, 0.28);
+  --border-subtle: rgba(15, 23, 42, 0.08);
+  --border-strong: rgba(15, 23, 42, 0.14);
+  --text-primary: #14161a;
+  --text-secondary: #525866;
+  --text-muted: #848b99;
+  --accent: #3b82f6;
+  --accent-soft: rgba(59, 130, 246, 0.12);
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 6px 20px -10px rgba(15, 23, 42, 0.1);
+  --shadow-card-hover: 0 4px 14px -4px rgba(15, 23, 42, 0.12), 0 12px 28px -12px rgba(15, 23, 42, 0.14);
+  --shadow-glass: 0 24px 64px -16px rgba(15, 23, 42, 0.24), 0 0 0 1px rgba(15, 23, 42, 0.08);
+}
+
+.dark {
+  --bg-canvas: #0c0d11;
+  --bg-surface: #14161c;
+  --bg-surface-hover: #1a1d25;
+  --bg-glass: rgba(20, 22, 29, 0.72);
+  --bg-glass-strong: rgba(22, 25, 33, 0.86);
+  --bg-backdrop: rgba(4, 5, 9, 0.56);
+  --border-subtle: rgba(255, 255, 255, 0.075);
+  --border-strong: rgba(255, 255, 255, 0.13);
+  --text-primary: #f3f4f7;
+  --text-secondary: #9da4b3;
+  --text-muted: #656c7c;
+  --accent: #60a5fa;
+  --accent-soft: rgba(96, 165, 250, 0.14);
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 8px 24px -12px rgba(0, 0, 0, 0.55);
+  --shadow-card-hover: 0 1px 0 rgba(255, 255, 255, 0.08) inset, 0 16px 36px -14px rgba(0, 0, 0, 0.75);
+  --shadow-glass: 0 28px 80px -18px rgba(0, 0, 0, 0.78), 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
+    Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Subtle ambient canvas atmosphere for glass refraction */
+.ambient-canvas {
+  background-color: var(--bg-canvas);
+  background-image:
+    radial-gradient(60% 42% at 50% -8%, rgba(99, 102, 241, 0.09), transparent 72%),
+    radial-gradient(45% 32% at 88% 8%, rgba(56, 189, 248, 0.06), transparent 68%);
+  background-attachment: fixed;
+}
+
+.dark .ambient-canvas {
+  background-image:
+    radial-gradient(62% 44% at 50% -8%, rgba(99, 102, 241, 0.13), transparent 70%),
+    radial-gradient(45% 35% at 85% 6%, rgba(56, 189, 248, 0.08), transparent 65%);
+}
+
+/* Translucent glass utilities */
+.glass-panel {
+  background: var(--bg-glass);
+  backdrop-filter: blur(22px) saturate(170%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+  border: 1px solid var(--border-subtle);
+}
+
+.glass-strong {
+  background: var(--bg-glass-strong);
+  backdrop-filter: blur(28px) saturate(185%);
+  -webkit-backdrop-filter: blur(28px) saturate(185%);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-glass);
+}
+
+.glass-backdrop {
+  background: var(--bg-backdrop);
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+}
+
+/* Refined semantic card tints (calm, eye-friendly in both modes) */
+.note-tint-default {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+}
+.note-tint-amber {
+  background: linear-gradient(180deg, rgba(251, 191, 36, 0.11) 0%, var(--bg-surface) 100%);
+  border-color: rgba(245, 158, 11, 0.22);
+}
+.note-tint-sage {
+  background: linear-gradient(180deg, rgba(52, 211, 153, 0.1) 0%, var(--bg-surface) 100%);
+  border-color: rgba(16, 185, 129, 0.22);
+}
+.note-tint-sky {
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.11) 0%, var(--bg-surface) 100%);
+  border-color: rgba(14, 165, 233, 0.22);
+}
+.note-tint-lavender {
+  background: linear-gradient(180deg, rgba(167, 139, 250, 0.11) 0%, var(--bg-surface) 100%);
+  border-color: rgba(139, 92, 246, 0.22);
+}
+.note-tint-rose {
+  background: linear-gradient(180deg, rgba(251, 113, 133, 0.1) 0%, var(--bg-surface) 100%);
+  border-color: rgba(244, 63, 94, 0.22);
+}
+
+.dark .note-tint-amber {
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.11) 0%, rgba(20, 22, 28, 0.96) 100%);
+  border-color: rgba(251, 191, 36, 0.18);
+}
+.dark .note-tint-sage {
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.1) 0%, rgba(20, 22, 28, 0.96) 100%);
+  border-color: rgba(52, 211, 153, 0.18);
+}
+.dark .note-tint-sky {
+  background: linear-gradient(180deg, rgba(14, 165, 233, 0.11) 0%, rgba(20, 22, 28, 0.96) 100%);
+  border-color: rgba(56, 189, 248, 0.18);
+}
+.dark .note-tint-lavender {
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.11) 0%, rgba(20, 22, 28, 0.96) 100%);
+  border-color: rgba(167, 139, 250, 0.18);
+}
+.dark .note-tint-rose {
+  background: linear-gradient(180deg, rgba(244, 63, 94, 0.1) 0%, rgba(20, 22, 28, 0.96) 100%);
+  border-color: rgba(251, 113, 133, 0.18);
+}
+
+.note-card-shadow {
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 180ms ease;
+}
+
+.note-card-shadow:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+/* Signature spring & translucent animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-spring-in {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--origin-dx, 0px), var(--origin-dy, 18px), 0)
+      scale(var(--origin-scale, 0.94));
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes peek-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes card-switch-next {
+  from {
+    opacity: 0.35;
+    transform: translateX(28px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes card-switch-prev {
+  from {
+    opacity: 0.35;
+    transform: translateX(-28px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes toast-rise {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 14px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-modal-in {
+  animation: modal-spring-in 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-peek-pop {
+  animation: peek-pop 170ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-switch-next {
+  animation: card-switch-next 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-switch-prev {
+  animation: card-switch-prev 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-toast-rise {
+  animation: toast-rise 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Custom sleek scrollbars */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Safe area helpers for Android & notch devices */
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.safe-bottom {
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 12px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-modal-in,
+  .animate-peek-pop,
+  .animate-switch-next,
+  .animate-switch-prev,
+  .animate-toast-rise {
+    animation-duration: 1ms !important;
+  }
+}
